@@ -10,34 +10,33 @@
 
 ### 使用 conda 安装环境
 
-!!!
-    1. 使用 env.yml 中指定的依赖创建环境：
-        ```sh
-        conda env create -f env.yml
-        ```
+1. 使用 env.yml 中指定的依赖创建环境：
+    ```sh
+    conda env create -f env.yml
+    ```
 
-    1. 激活新创建的环境：
-        ```sh
-        conda activate
-        ```
-        
-    2. 在新环境中安装 IPython 内核，以便在 Jupyter Notebook 中使用该环境： 
+2. 激活新创建的环境：
+    ```sh
+    conda activate
+    ```
     
-        ```sh
-        python -m ipykernel install --user --name signal_system
-        ```
+3. 在新环境中安装 IPython 内核，以便在 Jupyter Notebook 中使用该环境： 
 
-    3. 示例是一个 Jupyter Notebook。完成上述步骤后，你可以通过以下命令启动：
-        ```sh
-        jupyter notebook example.ipynb
-        ```
-        
-    5. 为确保使用正确的环境，请在 example.ipynb 的工具栏中点击 Kernel -> Change kernel，在下拉菜单中选择 signal_system。
+    ```sh
+    python -m ipykernel install --user --name signal_system
+    ```
 
-    6. 若要停用当前环境，请使用：
-        ```sh
-        conda deactivate
-        ```
+4. 示例是一个 Jupyter Notebook。完成上述步骤后，你可以通过以下命令启动：
+    ```sh
+    jupyter notebook example.ipynb
+    ```
+    
+5. 为确保使用正确的环境，请在 example.ipynb 的工具栏中点击 Kernel -> Change kernel，在下拉菜单中选择 signal_system。
+
+6. 若要停用当前环境，请使用：
+    ```sh
+    conda deactivate
+    ```
 
 ### 相关依赖
 
