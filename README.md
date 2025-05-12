@@ -27,11 +27,8 @@
 │   ├── lab3.typ
 │   ├── lab4.typ
 │   ├── logo
-│   │   ├── NKU-logo.png
-│   │   ├── NKU-name.png
 │   │   ├── demo.png
 │   │   ├── demo.svg
-│   │   ├── demo2.png
 │   │   ├── sysu-logo.png
 │   │   ├── sysu-logo.svg
 │   │   └── sysu-logo2.pdf
@@ -41,7 +38,7 @@
 │   └── 综合-探索实验.pdf
 └── tree.bak
 
-8 directories, 22 files
+8 directories, 19 files
 ```
 <!-- readme-tree end -->
 
