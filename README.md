@@ -10,9 +10,6 @@
 
 ```
 .
-├── .github
-│   └── workflows
-│       └── readme_tree.yml
 ├── README.md
 ├── code
 │   ├── example.ipynb
