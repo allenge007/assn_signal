@@ -33,10 +33,9 @@
 │   │   └── sysu-logo2.pdf
 │   ├── main.typ
 │   └── template.typ
-├── task
-│   └── 综合-探索实验.pdf
-└── tree.bak
-
+└── task
+    └── 综合-探索实验.pdf
+ 
 8 directories, 19 files
 ```
 
@@ -78,36 +77,4 @@
 - jupyter
 - matplotlib
 - ipykernel
-<!-- readme-tree start -->
-```
-.
-├── .github
-│   └── workflows
-│       └── readme_tree.yml
-├── README.md
-├── code
-│   ├── example.ipynb
-│   └── example.py
-├── env.yml
-├── references
-│   └── ref.md
-├── report
-│   ├── lab1.typ
-│   ├── lab2.typ
-│   ├── lab3.typ
-│   ├── lab4.typ
-│   ├── logo
-│   │   ├── demo.png
-│   │   ├── demo.svg
-│   │   ├── sysu-logo.png
-│   │   ├── sysu-logo.svg
-│   │   └── sysu-logo2.pdf
-│   ├── main.typ
-│   └── template.typ
-├── task
-│   └── 综合-探索实验.pdf
-└── tree.bak
-
-8 directories, 19 files
-```
-<!-- readme-tree end -->
+- numpy
