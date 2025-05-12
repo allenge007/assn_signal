@@ -9,6 +9,40 @@
 ## 项目结构
 
 <!-- readme-tree start -->
+```
+.
+├── .github
+│   └── workflows
+│       └── readme_tree.yml
+├── README.md
+├── code
+│   ├── example.ipynb
+│   └── example.py
+├── env.yml
+├── references
+│   └── ref.md
+├── report
+│   ├── lab1.typ
+│   ├── lab2.typ
+│   ├── lab3.typ
+│   ├── lab4.typ
+│   ├── logo
+│   │   ├── NKU-logo.png
+│   │   ├── NKU-name.png
+│   │   ├── demo.png
+│   │   ├── demo.svg
+│   │   ├── demo2.png
+│   │   ├── sysu-logo.png
+│   │   ├── sysu-logo.svg
+│   │   └── sysu-logo2.pdf
+│   ├── main.typ
+│   └── template.typ
+├── task
+│   └── 综合-探索实验.pdf
+└── tree.bak
+
+8 directories, 22 files
+```
 <!-- readme-tree end -->
 
 ## 环境配置
