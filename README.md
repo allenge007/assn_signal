@@ -8,7 +8,6 @@
 
 ## 项目结构
 
-<!-- readme-tree start -->
 ```
 .
 ├── .github
@@ -40,7 +39,6 @@
 
 8 directories, 19 files
 ```
-<!-- readme-tree end -->
 
 ## 环境配置
 
