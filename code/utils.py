@@ -12,6 +12,7 @@ from typing import Dict, List, Any, Optional
 import zipfile
 import requests
 from tqdm import tqdm
+import time
 
 def download_esc50_dataset(save_path: str = "./data") -> str:
     """Download ESC-50 dataset if not already present"""
@@ -153,19 +154,26 @@ def plot_spectrogram_comparison(audio: np.ndarray, sr: int = 22050,
 
 def get_system_info() -> Dict[str, Any]:
     """Get system information for reproducibility"""
-    import tensorflow as tf
     import platform
     
     info = {
         'python_version': platform.python_version(),
-        'tensorflow_version': tf.__version__,
         'platform': platform.platform(),
-        'gpu_available': tf.config.list_physical_devices('GPU') != []
+        'gpu_available': False
     }
     
-    if info['gpu_available']:
+    # Try to import tensorflow safely
+    try:
+        import tensorflow as tf
+        info['tensorflow_version'] = tf.__version__
         gpu_devices = tf.config.list_physical_devices('GPU')
-        info['gpu_devices'] = [device.name for device in gpu_devices]
+        info['gpu_available'] = len(gpu_devices) > 0
+        if info['gpu_available']:
+            info['gpu_devices'] = [device.name for device in gpu_devices]
+    except ImportError:
+        info['tensorflow_version'] = 'Not installed'
+    except Exception as e:
+        info['tensorflow_version'] = f'Error: {str(e)[:50]}'
     
     return info
 
@@ -197,10 +205,25 @@ class Timer:
 def ensure_reproducibility(seed: int = 42):
     """Ensure reproducible results"""
     np.random.seed(seed)
-    tf.random.set_seed(seed)
     
-    # Set deterministic operations
-    os.environ['TF_DETERMINISTIC_OPS'] = '1'
-    tf.config.experimental.enable_op_determinism()
-    
-    print(f"Random seed set to {seed} for reproducibility")
+    # Try to set TensorFlow seed safely
+    try:
+        import tensorflow as tf
+        tf.random.set_seed(seed)
+        
+        # Set deterministic operations if available
+        try:
+            os.environ['TF_DETERMINISTIC_OPS'] = '1'
+            tf.config.experimental.enable_op_determinism()
+        except AttributeError:
+            # Older TensorFlow versions might not have this
+            pass
+        except Exception as e:
+            print(f"Warning: Could not enable deterministic operations: {e}")
+        
+        print(f"Random seed set to {seed} for reproducibility")
+    except ImportError:
+        print(f"Warning: TensorFlow not available, only NumPy seed set to {seed}")
+    except Exception as e:
+        print(f"Warning: Could not set TensorFlow seed: {e}")
+        print(f"NumPy seed set to {seed}")
