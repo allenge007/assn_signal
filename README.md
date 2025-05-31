@@ -12,7 +12,10 @@
 
 ## 环境配置
 
-### 方案1：使用Conda（推荐）
+### 重要说明
+本项目已更新为使用最新的TensorFlow版本（2.16+）。如果遇到依赖安装问题，请按照以下步骤操作。
+
+### 方案1：使用Conda（强烈推荐）
 
 ```bash
 # 创建conda环境
@@ -25,6 +28,9 @@ conda activate esc50_classification
 ### 方案2：使用pip和virtualenv
 
 ```bash
+# 首先升级pip到最新版本
+pip install --upgrade pip
+
 # 创建虚拟环境
 python -m venv venv
 
@@ -38,19 +44,31 @@ venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 方案3：直接使用pip
+### 方案3：手动安装主要依赖
+
+如果自动安装失败，可以手动安装：
 
 ```bash
-# 直接安装依赖
-pip install -r requirements.txt
+# 升级pip
+pip install --upgrade pip
+
+# 安装核心依赖
+pip install tensorflow>=2.16.0
+pip install librosa>=0.10.0
+pip install numpy pandas scikit-learn
+pip install matplotlib seaborn
+pip install tqdm requests pyyaml h5py
+
+# 安装音频支持
+pip install soundfile ffmpeg-python
 ```
 
 ## 系统要求
 
-- **Python版本**：3.8-3.10（推荐3.9）
+- **Python版本**：3.9-3.11（推荐3.10）
 - **内存**：至少8GB（推荐16GB）
 - **存储空间**：约2GB用于ESC-50数据集
-- **GPU**：非必需但推荐用于加速训练
+- **GPU**：非必需但推荐用于加速训练（需CUDA支持）
 
 ### 额外系统依赖
 
@@ -70,11 +88,22 @@ brew install ffmpeg
 **Windows:**
 从https://ffmpeg.org/download.html下载
 
+#### GPU支持（可选）
+
+如需GPU加速，确保安装了兼容的CUDA版本：
+- TensorFlow 2.16+: CUDA 12.x
+- 检查GPU兼容性：`python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"`
+
 ## 快速开始
 
 1. **配置环境**（见上文）
 
-2. **运行系统:**
+2. **验证安装:**
+```bash
+python -c "import tensorflow as tf; import librosa; print('✓ 所有依赖安装成功')"
+```
+
+3. **运行系统:**
 ```bash
 # 自动下载数据集并训练所有模型
 python -m code.main --model_type all --download_dataset
@@ -86,7 +115,7 @@ python -m code.main --model_type resnet --feature_type mel
 python -m code.main --model_type attention --epochs 50 --batch_size 64 --learning_rate 0.0005
 ```
 
-3. **可用模型类型:**
+4. **可用模型类型:**
    - `resnet`: 基于ResNet的架构
    - `attention`: 带自注意力机制的CNN
    - `siamese`: 孪生网络
@@ -154,10 +183,49 @@ config.data.sample_rate = 22050
 
 ### 常见问题
 
-1. **音频加载错误**：确保ffmpeg正确安装
-2. **内存不足**：减小配置中的batch_size或使用更大内存的机器
-3. **未检测到GPU**：安装tensorflow-gpu或确保CUDA配置正确
-4. **数据集下载失败**：检查网络连接或手动下载ESC-50
+1. **TensorFlow版本错误**：
+   ```bash
+   # 如果遇到版本冲突，完全重新安装
+   pip uninstall tensorflow
+   pip install tensorflow>=2.16.0
+   ```
+
+2. **音频加载错误**：确保ffmpeg正确安装
+   ```bash
+   # 测试ffmpeg
+   ffmpeg -version
+   ```
+
+3. **内存不足**：减小配置中的batch_size或使用更大内存的机器
+   ```python
+   # 在代码中调整
+   config.training.batch_size = 16  # 降低批次大小
+   ```
+
+4. **未检测到GPU**：检查CUDA安装
+   ```python
+   import tensorflow as tf
+   print("GPU可用:", tf.config.list_physical_devices('GPU'))
+   ```
+
+5. **数据集下载失败**：检查网络连接或手动下载ESC-50
+   ```bash
+   # 手动下载到data目录
+   wget https://github.com/karolpiczak/ESC-50/archive/master.zip
+   ```
+
+### 依赖版本兼容性
+
+如果遇到版本冲突，可尝试以下兼容版本组合：
+
+```bash
+# 稳定版本组合
+pip install tensorflow==2.16.1
+pip install librosa==0.10.1
+pip install numpy==1.24.3
+pip install pandas==2.0.3
+pip install scikit-learn==1.3.0
+```
 
 ### 性能优化建议
 
