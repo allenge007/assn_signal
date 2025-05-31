@@ -3,7 +3,7 @@ Configuration settings for the environmental sound classification system.
 """
 
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Tuple, List
 
 @dataclass
@@ -38,9 +38,9 @@ class TrainingConfig:
 @dataclass
 class Config:
     """Main configuration class"""
-    data: DataConfig = DataConfig()
-    model: ModelConfig = ModelConfig() 
-    training: TrainingConfig = TrainingConfig()
+    data: DataConfig = field(default_factory=DataConfig)
+    model: ModelConfig = field(default_factory=ModelConfig) 
+    training: TrainingConfig = field(default_factory=TrainingConfig)
     
     def __post_init__(self):
         # Create directories if they don't exist

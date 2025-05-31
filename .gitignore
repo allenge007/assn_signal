@@ -1,0 +1,44 @@
+# Data files
+data/
+datasets/
+*.wav
+*.mp3
+*.flac
+
+# Model files
+models/
+*.h5
+*.pkl
+*.joblib
+checkpoints/
+
+# Results and logs
+results/
+logs/
+plots/
+*.log
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints
+
+# Environment files
+.env
+.venv
+env/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+
+venv
+__pycache__
