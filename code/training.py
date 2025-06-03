@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from typing import Dict, List, Tuple, Optional
 import time
+from datetime import datetime
 
 from .config import config
 from .models import get_model
@@ -224,7 +225,9 @@ class ModelTrainer:
 def train_all_models(X_train: np.ndarray, y_train: np.ndarray,
                     X_val: np.ndarray, y_val: np.ndarray,
                     X_test: np.ndarray, y_test: np.ndarray,
-                    class_names: List[str] = None) -> Dict:
+                    class_names: List[str] = None,
+                    save_path: Optional[str] = None
+                    ) -> Dict:
     """Train and evaluate all model types"""
     
     model_types = ["simple_cnn", "resnet", "attention", "siamese"]
@@ -257,14 +260,14 @@ def train_all_models(X_train: np.ndarray, y_train: np.ndarray,
         
         # Plot training history
         trainer.plot_training_history(
-            save_path=f"./plots/{model_type}_training_history.png"
+            save_path=f"{save_path}/{model_type}_training_history.png"
         )
         
         print(f"{model_type.upper()} - Test Accuracy: {eval_results['test_accuracy']:.4f}")
     
     return results
 
-def compare_models(results: Dict):
+def compare_models(results: Dict, save_path: Optional[str] = None):
     """Compare performance of different models"""
     model_names = list(results.keys())
     accuracies = [results[name]['evaluation']['test_accuracy'] for name in model_names]
@@ -282,8 +285,9 @@ def compare_models(results: Dict):
                 f'{acc:.3f}', ha='center', va='bottom')
     
     plt.tight_layout()
-    plt.show()
-    
+    # plt.show()
+    if save_path:
+        plt.savefig(save_path)
     # Print detailed comparison
     print("\nModel Performance Summary:")
     print("-" * 40)
