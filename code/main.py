@@ -4,7 +4,6 @@ This script demonstrates the complete pipeline from data processing to model eva
 """
 
 from datetime import datetime
-import config
 import os
 import sys
 import argparse
@@ -210,7 +209,7 @@ def create_parser() -> argparse.ArgumentParser:
 if __name__ == "__main__":
     parser = create_parser()
     args = parser.parse_args()
-    
+    from .config import config
     # Override config with command line arguments if provided
     if args.epochs:
         config.training.epochs = args.epochs
