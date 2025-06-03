@@ -316,10 +316,10 @@ $ theta_t = theta_(t-1) - alpha dot hat(m)_t / (sqrt(hat(v)_t) + epsilon) $
       [*模型类型*], [*参数量*], [*计算复杂度*], [*特点*]
     ),
     table.hline(stroke: 0.8pt),
-    [Simple CNN], [~0.43M], [O(N²)], [基础卷积结构，计算高效],
-    [ResNet], [~23.73M], [O(N²)], [残差连接，解决梯度消失],
-    [Attention], [~1.77M], [O(N²)], [自适应特征权重，关注重点区域],
-    [Siamese], [~1.69M], [O(N²)], [共享权重，特征表示学习],
+    [Simple CNN], [~0.41M], [O(N²)], [基础卷积结构，计算高效],
+    [ResNet], [~10.69M], [O(N²)], [残差连接，解决梯度消失],
+    [Attention], [~1.69M], [O(N²)], [自适应特征权重，关注重点区域],
+    [Siamese], [~1.62M], [O(N²)], [共享权重，特征表示学习],
     table.hline(stroke: 0.8pt),
   ),
   caption: "不同模型的复杂度对比"
