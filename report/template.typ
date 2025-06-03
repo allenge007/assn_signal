@@ -9,10 +9,10 @@
 #import "@preview/hydra:0.6.0": hydra
 #import "@preview/mitex:0.2.5": *
 
-#let Heiti = ("Times New Roman", "Heiti SC", "Heiti TC", "Hei")
-#let Songti = ("Times New Roman", "Songti SC", "Songti TC", "SimSong")
-#let Zhongsong = ("Times New Roman", "STFangsong", "SimSong")
-#let Xbs = ("Times New Roman", "FandolSong", "SimSong")
+#let Heiti = ("Times New Roman", "Heiti SC", "Heiti TC", "PingFang SC", "Hiragino Sans GB", "Arial Unicode MS")
+#let Songti = ("Times New Roman", "Songti SC", "Songti TC", "PingFang SC", "Hiragino Mincho Pro", "STSong")
+#let Zhongsong = ("Times New Roman", "STFangsong", "STSong", "PingFang SC", "Georgia")
+#let Xbs = ("Times New Roman", "FandolSong", "STSong", "PingFang SC", "Palatino")
 
 #let indent() = {
   box(width: 2em)
@@ -81,10 +81,10 @@
       info_value(course),
       info_key("专业名称"),
       info_value(major),
-      info_key("学生姓名"),
+      info_key("小组成员"),
       info_value(stu_name),
-      info_key("学生学号"),
-      info_value(stu_num),
+      // info_key("学生学号"),
+      // info_value(stu_num),
       info_key("实验地点"),
       info_value(department),
       info_key("实验成绩"),
