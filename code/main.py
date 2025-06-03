@@ -4,7 +4,7 @@ This script demonstrates the complete pipeline from data processing to model eva
 """
 
 from datetime import datetime
-from logging import config
+import config
 import os
 import sys
 import argparse
