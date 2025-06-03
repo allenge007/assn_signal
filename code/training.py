@@ -232,6 +232,8 @@ def train_all_models(X_train: np.ndarray, y_train: np.ndarray,
     
     model_types = ["simple_cnn", "resnet", "attention", "siamese"]
     results = {}
+    if save_path and not os.path.exists(save_path):
+        os.makedirs(save_path, exist_ok=True)
     
     for model_type in model_types:
         print(f"\n{'='*50}")
@@ -269,6 +271,8 @@ def train_all_models(X_train: np.ndarray, y_train: np.ndarray,
 
 def compare_models(results: Dict, save_path: Optional[str] = None):
     """Compare performance of different models"""
+    if save_path and not os.path.exists(save_path):
+        os.makedirs(save_path, exist_ok=True)
     model_names = list(results.keys())
     accuracies = [results[name]['evaluation']['test_accuracy'] for name in model_names]
     

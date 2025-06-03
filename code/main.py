@@ -82,7 +82,8 @@ def main(args: argparse.Namespace):
         current_time = datetime.now().strftime("%m-%d_%H-%M")
         # Train models
         if args.model_type == "all":
-            save_path = f"./plots-{current_time}"
+            save_path = f"./results/{current_time}"
+            os.makedirs(save_path, exist_ok=True)
             print("\nTraining all models...")
             with Timer("Training all models"):
                 results = train_all_models(
@@ -97,11 +98,11 @@ def main(args: argparse.Namespace):
             compare_models(results, f"{save_path}/all_models_results.png")
             
             # Save results
-            save_results(results, f"./results-{current_time}/all_models_results.json")
+            save_results(results, f"{save_path}/all_models_results.json")
             
         else:
             print(f"\nTraining {args.model_type} model...")
-            
+            save_path = f"./results/{current_time}-{args.model_type}"
             trainer = ModelTrainer(model_type=args.model_type)
             
             with Timer(f"Training {args.model_type}"):
@@ -117,18 +118,18 @@ def main(args: argparse.Namespace):
             
             # Plot results
             trainer.plot_training_history(
-                save_path=f"./plots-{current_time}-{args.model_type}/{args.model_type}_training_history.png"
+                save_path=f"{save_path}/{args.model_type}_training_history.png"
             )
             
             trainer.plot_confusion_matrix(
                 eval_results['confusion_matrix'],
                 class_names=class_names,
-                save_path=f"./plots-{current_time}-{args.model_type}/{args.model_type}_confusion_matrix.png"
+                save_path=f"{save_path}/{args.model_type}_confusion_matrix.png"
             )
             
             # Save single model results
             results = {args.model_type: {'evaluation': eval_results}}
-            save_results(results, f"./results-{current_time}-{args.model_type}/{args.model_type}_results.json")
+            save_results(results, f"{save_path}/{args.model_type}_results.json")
         
         print("\nTraining completed successfully!")
         
