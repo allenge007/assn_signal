@@ -3,6 +3,7 @@ Main execution script for ESC-50 environmental sound classification.
 This script demonstrates the complete pipeline from data processing to model evaluation.
 """
 
+from datetime import datetime
 import os
 import sys
 import argparse
@@ -78,25 +79,30 @@ def main(args: argparse.Namespace):
         config.model.input_shape = X_train.shape[1:]
         config.model.num_classes = len(class_names)
         
+        current_time = datetime.now().strftime("%m-%d_%H-%M")
         # Train models
         if args.model_type == "all":
+            save_path = f"./results/{current_time}"
+            os.makedirs(save_path, exist_ok=True)
             print("\nTraining all models...")
             with Timer("Training all models"):
                 results = train_all_models(
                     X_train, y_train, X_val, y_val, X_test, y_test,
-                    class_names=class_names
+                    class_names=class_names,
+                    save_path=save_path,
                 )
             
             # Compare models
             print("\nComparing model performances...")
-            compare_models(results)
+            
+            compare_models(results, f"{save_path}/all_models_results.png")
             
             # Save results
-            save_results(results, "./results/all_models_results.json")
+            save_results(results, f"{save_path}/all_models_results.json")
             
         else:
             print(f"\nTraining {args.model_type} model...")
-            
+            save_path = f"./results/{current_time}-{args.model_type}"
             trainer = ModelTrainer(model_type=args.model_type)
             
             with Timer(f"Training {args.model_type}"):
@@ -112,18 +118,18 @@ def main(args: argparse.Namespace):
             
             # Plot results
             trainer.plot_training_history(
-                save_path=f"./plots/{args.model_type}_training_history.png"
+                save_path=f"{save_path}/{args.model_type}_training_history.png"
             )
             
             trainer.plot_confusion_matrix(
                 eval_results['confusion_matrix'],
                 class_names=class_names,
-                save_path=f"./plots/{args.model_type}_confusion_matrix.png"
+                save_path=f"{save_path}/{args.model_type}_confusion_matrix.png"
             )
             
             # Save single model results
             results = {args.model_type: {'evaluation': eval_results}}
-            save_results(results, f"./results/{args.model_type}_results.json")
+            save_results(results, f"{save_path}/{args.model_type}_results.json")
         
         print("\nTraining completed successfully!")
         
@@ -204,7 +210,7 @@ def create_parser() -> argparse.ArgumentParser:
 if __name__ == "__main__":
     parser = create_parser()
     args = parser.parse_args()
-    
+    from .config import config
     # Override config with command line arguments if provided
     if args.epochs:
         config.training.epochs = args.epochs
